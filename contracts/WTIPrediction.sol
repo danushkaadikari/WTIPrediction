@@ -684,9 +684,9 @@ pragma solidity ^0.8.0;
 pragma abicoder v2;
 
 /**
- * @title PancakePredictionV2
+ * @title WTIPrediction
  */
-contract PancakePredictionV2 is Ownable, Pausable, ReentrancyGuard {
+contract WTIPrediction is Ownable, Pausable, ReentrancyGuard {
     using SafeERC20 for IERC20;
 
     AggregatorV3Interface public oracle;
