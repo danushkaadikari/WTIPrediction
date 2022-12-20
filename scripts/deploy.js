@@ -2,10 +2,10 @@ const hre = require("hardhat");
 
 async function main() {
 
-  const PoolAddressesProvider = await hre.ethers.getContractFactory("PoolAddressesProvider");
-  const poolAddressesProvider = await PoolAddressesProvider.deploy();
+  const WTIPrediction = await hre.ethers.getContractFactory("WTIPrediction");
+  const wtiPrediction = await WTIPrediction.deploy();
 
-  console.log("PoolAddressesProvider deployed to:", poolAddressesProvider.address);
+  console.log("WTIPrediction deployed to:", wtiPrediction.address);
 }
 
 main()
