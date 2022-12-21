@@ -2,7 +2,7 @@
 
 pragma solidity ^0.8.0;
 
-import { ERC20 } from '../dependencies/openzeppelin/ERC20.sol';
+import { ERC20 } from '../openzeppelin/ERC20.sol';
 
 /**
  * @title ERC20Mintable
