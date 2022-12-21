@@ -3,12 +3,12 @@
 pragma solidity ^0.8.0;
 pragma abicoder v2;
 
-import './dependencies/openzeppelin/Ownable.sol';
-import './dependencies/openzeppelin/Pausable.sol';
-import './dependencies/openzeppelin/ReentrancyGuard.sol';
-import './dependencies/chainlink/AggregatorV3Interface.sol';
-import './dependencies/openzeppelin/IERC20.sol';
-import './dependencies/openzeppelin/SafeERC20.sol';
+import './openzeppelin/Ownable.sol';
+import './openzeppelin/Pausable.sol';
+import './openzeppelin/ReentrancyGuard.sol';
+import './openzeppelin/IERC20.sol';
+import './openzeppelin/SafeERC20.sol';
+import './chainlink/AggregatorV3Interface.sol';
 
 /**
  * @title WTIPrediction
