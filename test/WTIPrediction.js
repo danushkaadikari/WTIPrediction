@@ -14,7 +14,8 @@ const setBlocktime = async (time) => {
   };
 
 describe("WTIPrediction", function() {
-   it("initialize", async () => {
-
-   })
+  
+  it("initialize", async () => {
+  
+  })
 });
