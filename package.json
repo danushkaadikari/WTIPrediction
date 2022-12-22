@@ -1,10 +1,10 @@
 {
-  "name": "@aave/core-v3",
+  "name": "WTIPrediction",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "hardhat test test-suites/*.spec.ts"
+    "test": "hardhat test"
   },
   "keywords": [],
   "author": "",
@@ -17,6 +17,7 @@
     "hardhat": "^2.9.3"
   },
   "dependencies": {
+    "@chainlink/contracts": "^0.5.1",
     "@nomiclabs/hardhat-etherscan": "^3.0.3",
     "@nomiclabs/hardhat-waffle": "^2.0.3",
     "chai": "^4.3.6",

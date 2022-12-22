@@ -1,100 +1,93 @@
 // SPDX-License-Identifier: MIT
-
 pragma solidity ^0.8.0;
 
-import '../chainlink/AggregatorV3Interface.sol';
+import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 
-contract MockAggregator is AggregatorV3Interface {
-  struct RoundData {
-      int256 answer;
-      uint256 startedAt;
-      uint256 updatedAt;
-      uint80 answeredInRound;
-  }
+/**
+ * @title MockV3Aggregator
+ * @notice Based on the FluxAggregator contract
+ * @notice Use this contract when you need to test
+ * other contract's ability to read data from an
+ * aggregator contract, but how the aggregator got
+ * its answer is unimportant
+ */
+contract MockAggregatorV3 is AggregatorV3Interface {
+    uint256 public constant override version = 0;
 
-  uint8 private _decimals;
-  string private _description;
-  mapping(uint80 => RoundData) private _roundsData;
-  uint80 private _lastRoundId;
+    uint8 public override decimals;
+    int256 public latestAnswer;
+    uint256 public latestTimestamp;
+    uint256 public latestRound;
 
-  constructor() {
-    _description = "Mock Aggregator";
-    _decimals = 8;
-    _lastRoundId = 0;
-  }
+    mapping(uint256 => int256) public getAnswer;
+    mapping(uint256 => uint256) public getTimestamp;
+    mapping(uint256 => uint256) private getStartedAt;
 
-  function decimals() public view returns (uint8) {
-    return _decimals;
-  }
-
-  function description() public view returns (string memory) {
-    return _description;
-  }
-
-  function version()
-    public
-    view
-    returns (
-      uint256
-    ) {
-      return 1;
+    constructor(uint8 _decimals, int256 _initialAnswer) {
+        decimals = _decimals;
+        updateAnswer(_initialAnswer);
     }
 
-  // getRoundData and latestRoundData should both raise "No data present"
-  // if they do not have data to report, instead of returning unset values
-  // which could be misinterpreted as actual reported values.
-  function getRoundData(
-    uint80 _roundId
-  )
-    public
-    view
-    returns (
-      uint80 roundId,
-      int256 answer,
-      uint256 startedAt,
-      uint256 updatedAt,
-      uint80 answeredInRound
-    ) {
-      require(roundId < _lastRoundId, "Invalid Round Id");
-      RoundData storage roundData = _roundsData[roundId];
-      roundId = _roundId;
-      answer = roundData.answer;
-      startedAt = roundData.startedAt;
-      updatedAt = roundData.updatedAt;
-      answeredInRound = roundData.answeredInRound;
+    function updateAnswer(int256 _answer) public {
+        latestAnswer = _answer;
+        latestTimestamp = block.timestamp;
+        latestRound++;
+        getAnswer[latestRound] = _answer;
+        getTimestamp[latestRound] = block.timestamp;
+        getStartedAt[latestRound] = block.timestamp;
     }
 
-  function latestRoundData()
-    public
-    view
-    returns (
-      uint80 roundId,
-      int256 answer,
-      uint256 startedAt,
-      uint256 updatedAt,
-      uint80 answeredInRound
-    ) {
-      RoundData storage roundData = _roundsData[_lastRoundId];
-      roundId = _lastRoundId;
-      answer = roundData.answer;
-      startedAt = roundData.startedAt;
-      updatedAt = roundData.updatedAt;
-      answeredInRound = roundData.answeredInRound;
+    function updateRoundData(
+        uint80 _roundId,
+        int256 _answer,
+        uint256 _timestamp,
+        uint256 _startedAt
+    ) public {
+        latestRound = _roundId;
+        latestAnswer = _answer;
+        latestTimestamp = _timestamp;
+        getAnswer[latestRound] = _answer;
+        getTimestamp[latestRound] = _timestamp;
+        getStartedAt[latestRound] = _startedAt;
     }
-  
-  function appendRoundData(
-    int256 answer,
-    uint256 startedAt,
-    uint256 updatedAt,
-    uint80 answeredInRound
-  ) public {
-    _roundsData[_lastRoundId] = RoundData(
-      answer,
-      startedAt,
-      updatedAt,
-      answeredInRound
-    );
-    
-    _lastRoundId ++;
-  }
+
+    function getRoundData(uint80 _roundId)
+        external
+        view
+        override
+        returns (
+            uint80 roundId,
+            int256 answer,
+            uint256 startedAt,
+            uint256 updatedAt,
+            uint80 answeredInRound
+        )
+    {
+        return (_roundId, getAnswer[_roundId], getStartedAt[_roundId], getTimestamp[_roundId], _roundId);
+    }
+
+    function latestRoundData()
+        external
+        view
+        override
+        returns (
+            uint80 roundId,
+            int256 answer,
+            uint256 startedAt,
+            uint256 updatedAt,
+            uint80 answeredInRound
+        )
+    {
+        return (
+            uint80(latestRound),
+            getAnswer[latestRound],
+            getStartedAt[latestRound],
+            getTimestamp[latestRound],
+            uint80(latestRound)
+        );
+    }
+
+    function description() external view override returns (string memory) {
+        return "MockV3Aggregator for WTI Prediction";
+    }
 }
