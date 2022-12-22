@@ -9,7 +9,6 @@ const apiKeyForEthereum = "7QWMD5IKX9QMS71U41E6IGU3NK5E8HMKM6";
 const apiKeyForBscscan = "5YWE9Y6JAYQJ937Y16PT4I61644FSMBZ7P";
 const apiKeyForPolygon = "B1USFRKHATXATRIM1GKWJGY3HS5B39MRV4";
 
-const DEFAULT_BLOCK_GAS_LIMIT = 12450000;
 const HARDFORK = 'london';
 
 module.exports = {
@@ -17,10 +16,6 @@ module.exports = {
   networks: {
     hardhat: {
       hardfork: HARDFORK,
-      blockGasLimit: DEFAULT_BLOCK_GAS_LIMIT,
-      gas: DEFAULT_BLOCK_GAS_LIMIT,
-      gasPrice: 8000000000,
-      allowUnlimitedContractSize: true,
     },
     polygonMainnet: {
       url: `https://polygon-mainnet.g.alchemy.com/v2/${alchemyApiKey}`,
@@ -65,7 +60,7 @@ module.exports = {
     settings: {
       optimizer: {
         enabled: true,
-        runs: 200,
+        runs: 99999,
       }
     }
   },
