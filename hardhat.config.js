@@ -1,5 +1,4 @@
-require("@nomiclabs/hardhat-waffle");
-require('hardhat-deploy');
+require("@nomiclabs/hardhat-truffle5");
 require('@nomiclabs/hardhat-ethers');
 require("@nomiclabs/hardhat-etherscan");
 
