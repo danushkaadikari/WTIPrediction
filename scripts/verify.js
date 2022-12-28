@@ -1,10 +1,10 @@
 const hre = require("hardhat");
-const { DECIMALS, INITIAL_PRICE, INITIAL_TREASURY_RATE, INTERVAL_SECONDS, BUFFER_SECONDS, MIN_BET_AMOUNT,UPDATE_ALLOWANCE } = require("./config");
+const { ADMIN, OPERATOR, DECIMALS, INITIAL_PRICE, INITIAL_TREASURY_RATE, INTERVAL_SECONDS, BUFFER_SECONDS, MIN_BET_AMOUNT,UPDATE_ALLOWANCE } = require("./config");
 
 async function main() {
   const [ operator, admin, owner ] = await ethers.getSigners();
-  const oracle = "0xd4AF54E633166ae0651722Dd522d89154Aa365b2";
-  const prediction = "0x12C4D32eB09F48678aCB0304CD344a1cfb4dF059";
+  const oracle = "0x26bc67F809b6c0028AB9B6614d5d4E425Ab7cfe3";
+  const prediction = "0x181443333255ecE40db582cf44Dbac9EAB22dC90";
 
   await hre.run("verify:verify", {
     address: oracle,
@@ -17,8 +17,8 @@ async function main() {
     address: prediction,
     constructorArguments: [
       oracle,
-      admin.address,
-      operator.address,
+      ADMIN,
+      OPERATOR,
       INTERVAL_SECONDS,
       BUFFER_SECONDS,
       MIN_BET_AMOUNT,

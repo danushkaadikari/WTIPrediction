@@ -1,20 +1,18 @@
 const { ethers } = require("hardhat");
-const { DECIMALS, INITIAL_PRICE, INITIAL_TREASURY_RATE, INTERVAL_SECONDS, BUFFER_SECONDS, MIN_BET_AMOUNT,UPDATE_ALLOWANCE } = require("./config");
+const { ADMIN, OPERATOR, DECIMALS, INITIAL_PRICE, INITIAL_TREASURY_RATE, INTERVAL_SECONDS, BUFFER_SECONDS, MIN_BET_AMOUNT,UPDATE_ALLOWANCE } = require("./config");
 
 async function main() {
-  const [ operator, admin, owner ] = await ethers.getSigners();
-
   const Oracle = await ethers.getContractFactory("MockAggregatorV3");
-  const oracle = await Oracle.connect(owner).deploy(DECIMALS, INITIAL_PRICE);
+  const oracle = await Oracle.deploy(DECIMALS, INITIAL_PRICE);
   oracle.deployed(); 
 
   console.log("WTI Price Oracle deployed to:", oracle.address);
 
   const WTIPrediction = await ethers.getContractFactory("WTIPrediction");
-  const wtiPrediction = await WTIPrediction.connect(owner).deploy(
+  const wtiPrediction = await WTIPrediction.deploy(
     oracle.address,
-    admin.address,
-    operator.address,
+    ADMIN,
+    OPERATOR,
     INTERVAL_SECONDS,
     BUFFER_SECONDS,
     MIN_BET_AMOUNT,
