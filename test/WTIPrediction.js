@@ -4,7 +4,7 @@ const { BN, constants, expectEvent, expectRevert, time, ether, balance } = requi
 
 const GAS_PRICE = 8000000000; // hardhat default
 const BLOCK_COUNT_MULTPLIER = 5;
-const DECIMALS = 8; // Chainlink default for BNB/USD
+const DECIMALS = 8; // Chainlink default for WTI/USD
 const INITIAL_PRICE = 10000000000; // $100, 8 decimal places
 const INTERVAL_SECONDS = 20 * BLOCK_COUNT_MULTPLIER; // 20 seconds * multiplier
 const BUFFER_SECONDS = 5 * BLOCK_COUNT_MULTPLIER; // 5 seconds * multplier, round must lock/end within this buffer
