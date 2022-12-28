@@ -1,7 +1,6 @@
 const hre = require("hardhat");
 
 async function main() {
-
   const WTIPrediction = await hre.ethers.getContractFactory("WTIPrediction");
   const wtiPrediction = await WTIPrediction.deploy();
 
